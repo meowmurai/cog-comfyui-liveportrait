@@ -11,6 +11,7 @@
     "repo": "https://github.com/kijai/ComfyUI-LivePortraitKJ",
     "commit": "4d9dc62"
   },
+  { "repo": "https://github.com/kijai/ComfyUI-KJNodes", "commit": "80977db" },
   {
     "repo": "https://github.com/cubiq/ComfyUI_essentials",
     "commit": "33ff89f"

@@ -61,6 +61,9 @@ class Predictor(BasePredictor):
         load_image = workflow["196"]["inputs"]
         load_image["image"] = kwargs["face_filename"]
 
+        insightface = workflow["129"]["inputs"]
+        insightface["detection_threshold"] = kwargs["detection_threshold"]
+
         # resize_face_image = workflow["165"]["inputs"]
         # resize_face_image["width"] = kwargs["dwidth"]
         # resize_face_image["height"] = kwargs["dheight"]
@@ -91,6 +94,9 @@ class Predictor(BasePredictor):
         ),
         driving_video: Path = Input(
             description="A video to drive the animation",
+        ),
+        detection_threshold: float = Input(
+            description="threshold to insightface model, lower the threshold for better animal's face recognization"
         ),
         video_frame_load_cap: int = Input(
             description="The maximum number of frames to load from the driving video. Set to 0 to use all frames.",
@@ -163,6 +169,7 @@ class Predictor(BasePredictor):
             lip_retargeting_multiplier=live_portrait_lip_retargeting_multiplier,
             stitching=live_portrait_stitching,
             relative=live_portrait_relative,
+            detection_threshold=detection_threshold,
         )
 
         self.comfyUI.connect()

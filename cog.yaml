@@ -90,6 +90,7 @@ build:
     # ComfyUI-KJNodes
     - librosa
     - color-matcher
+    - mss
 
     # ComfyUI-VideoHelperSuite
     - opencv-python
