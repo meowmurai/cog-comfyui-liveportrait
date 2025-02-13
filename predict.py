@@ -96,7 +96,8 @@ class Predictor(BasePredictor):
             description="A video to drive the animation",
         ),
         detection_threshold: float = Input(
-            description="threshold to insightface model, lower the threshold for better animal's face recognization"
+            description="threshold to insightface model, lower the threshold for better animal's face recognization",
+            default=0.5,
         ),
         video_frame_load_cap: int = Input(
             description="The maximum number of frames to load from the driving video. Set to 0 to use all frames.",
