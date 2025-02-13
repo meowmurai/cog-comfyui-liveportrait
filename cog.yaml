@@ -42,9 +42,12 @@ build:
     - pilgram
     - scikit-learn
     - rembg
+    - pixeloe
+    - transparent-background
 
     # ComfyUI_essentials
     - numba
+    - colour-science
 
     # ComfyUI_FizzNodes
     - pandas
@@ -87,6 +90,10 @@ build:
     # ComfyUI-KJNodes
     - librosa
     - color-matcher
+
+    # ComfyUI-VideoHelperSuite
+    - opencv-python
+    - imageio-ffmpeg
 
     # PuLID
     - facexlib
