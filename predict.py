@@ -16,7 +16,7 @@ ALL_DIRECTORIES = [OUTPUT_DIR, INPUT_DIR, COMFYUI_TEMP_OUTPUT_DIR]
 
 mimetypes.add_type("image/webp", ".webp")
 
-api_json_file = "workflow_api.json"
+api_json_file = "new_workflow_api.json"
 
 # Force HF offline
 os.environ["HF_DATASETS_OFFLINE"] = "1"
@@ -58,14 +58,20 @@ class Predictor(BasePredictor):
         load_video["frame_load_cap"] = kwargs["frame_load_cap"]
         load_video["select_every_n_frames"] = kwargs["select_every_n_frames"]
 
-        load_image = workflow["4"]["inputs"]
+        load_image = workflow["196"]["inputs"]
         load_image["image"] = kwargs["face_filename"]
 
-        live_portrait = workflow["30"]["inputs"]
-        live_portrait["dsize"] = kwargs["dsize"]
-        live_portrait["scale"] = kwargs["scale"]
-        live_portrait["vx_ratio"] = kwargs["vx_ratio"]
-        live_portrait["vy_ratio"] = kwargs["vy_ratio"]
+        # resize_face_image = workflow["165"]["inputs"]
+        # resize_face_image["width"] = kwargs["dwidth"]
+        # resize_face_image["height"] = kwargs["dheight"]
+
+        face_image_cropper = workflow["189"]["inputs"]
+        face_image_cropper["dsize"] = kwargs["dsize"]
+        face_image_cropper["scale"] = kwargs["scale"]
+        face_image_cropper["vx_ratio"] = kwargs["vx_ratio"]
+        face_image_cropper["vy_ratio"] = kwargs["vy_ratio"]
+
+        live_portrait = workflow["190"]["inputs"]
         live_portrait["lip_zero"] = kwargs["lip_zero"]
         live_portrait["eye_retargeting"] = kwargs["eye_retargeting"]
         live_portrait["eyes_retargeting_multiplier"] = kwargs[

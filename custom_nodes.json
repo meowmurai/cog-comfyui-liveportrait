@@ -1,14 +1,14 @@
 [
   {
     "repo": "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite",
-    "commit": "0037f49"
+    "commit": "8629188"
   },
   {
     "repo": "https://github.com/Fannovel16/ComfyUI-Frame-Interpolation",
-    "commit": "1c4c4b4"
+    "commit": "c336f71"
   },
   {
     "repo": "https://github.com/kijai/ComfyUI-LivePortraitKJ",
-    "commit": "41d866c"
+    "commit": "4d9dc62"
   }
 ]
