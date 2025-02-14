@@ -61,6 +61,9 @@ class Predictor(BasePredictor):
         load_image = workflow["196"]["inputs"]
         load_image["image"] = kwargs["face_filename"]
 
+        download_model = workflow["1"]["inputs"]
+        download_model["mode"] = kwargs["mode"]
+
         insightface = workflow["129"]["inputs"]
         insightface["detection_threshold"] = kwargs["detection_threshold"]
 
@@ -94,6 +97,10 @@ class Predictor(BasePredictor):
         ),
         driving_video: Path = Input(
             description="A video to drive the animation",
+        ),
+        mode: str = Input(
+            description= "human or animal",
+                default="human" 
         ),
         detection_threshold: float = Input(
             description="threshold to insightface model, lower the threshold for better animal's face recognization",
@@ -157,6 +164,7 @@ class Predictor(BasePredictor):
             workflow,
             face_filename=face_filename,
             driving_filename=driving_filename,
+            mode=mode,
             frame_load_cap=video_frame_load_cap,
             select_every_n_frames=video_select_every_n_frames,
             dsize=live_portrait_dsize,

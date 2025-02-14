@@ -1,7 +1,8 @@
 {
   "1": {
     "inputs": {
-      "precision": "auto"
+      "precision": "auto",
+      "mode": "human"
     },
     "class_type": "DownloadAndLoadLivePortraitModels",
     "_meta": {
@@ -10,14 +11,14 @@
   },
   "8": {
     "inputs": {
-      "video": "3205789-hd_1080_1920_25fps.mp4",
+      "video": "d6.mp4",
       "force_rate": 0,
-      "custom_width": 0,
-      "custom_height": 0,
+      "force_size": "Disabled",
+      "custom_width": 512,
+      "custom_height": 512,
       "frame_load_cap": 128,
       "skip_first_frames": 0,
-      "select_every_nth": 1,
-      "format": "AnimateDiff"
+      "select_every_nth": 1
     },
     "class_type": "VHS_LoadVideo",
     "_meta": {
@@ -54,18 +55,6 @@
     "class_type": "GrowMaskWithBlur",
     "_meta": {
       "title": "Grow Mask With Blur"
-    }
-  },
-  "82": {
-    "inputs": {
-      "mask": [
-        "81",
-        0
-      ]
-    },
-    "class_type": "MaskPreview+",
-    "_meta": {
-      "title": "🔧 Mask Preview"
     }
   },
   "83": {
@@ -135,7 +124,6 @@
       "pix_fmt": "yuv420p",
       "crf": 19,
       "save_metadata": true,
-      "trim_to_audio": false,
       "pingpong": false,
       "save_output": false,
       "images": [
@@ -224,6 +212,8 @@
       "mismatch_method": "constant",
       "relative_motion_mode": "relative",
       "driving_smooth_observation_variance": 0.000003,
+      "expression_friendly": true,
+      "expression_friendly_multiplier": 1,
       "pipeline": [
         "1",
         0
@@ -272,7 +262,7 @@
   },
   "196": {
     "inputs": {
-      "image": "64c47081-446f-4ff7-b811-3bb55cabcb35.jpg",
+      "image": "ComfyUI_temp_gjesb_00023_.png",
       "upload": "image"
     },
     "class_type": "LoadImage",
