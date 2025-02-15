@@ -8,10 +8,12 @@ import shutil
 from typing import List
 from cog import BasePredictor, Input, Path
 from comfyui import ComfyUI
+import time
 
 OUTPUT_DIR = "/tmp/outputs"
 INPUT_DIR = "/tmp/inputs"
 COMFYUI_TEMP_OUTPUT_DIR = "ComfyUI/temp"
+COMFYUI_MODEL_DIR = "ComfyUI/models"
 ALL_DIRECTORIES = [OUTPUT_DIR, INPUT_DIR, COMFYUI_TEMP_OUTPUT_DIR]
 
 mimetypes.add_type("image/webp", ".webp")
@@ -28,18 +30,7 @@ class Predictor(BasePredictor):
     def setup(self):
         self.comfyUI = ComfyUI("127.0.0.1:8188")
         self.comfyUI.start_server(OUTPUT_DIR, INPUT_DIR)
-        self.comfyUI.handle_weights(
-            {},
-            weights_to_download=[
-                "buffalo_l",
-                "appearance_feature_extractor.safetensors",
-                "landmark.onnx",
-                "motion_extractor.safetensors",
-                "spade_generator.safetensors",
-                "stitching_retargeting_module.safetensors",
-                "warping_module.safetensors",
-            ],
-        )
+        self.comfyUI.handle_weights({})
 
     def filename_with_extension(self, input_file, prefix):
         extension = os.path.splitext(input_file.name)[1]
@@ -180,6 +171,30 @@ class Predictor(BasePredictor):
             relative=live_portrait_relative,
             detection_threshold=detection_threshold,
         )
+
+        # Downloading latest weights
+        base_bath = os.path.join(COMFYUI_MODEL_DIR, "liveportrait")
+        if mode == "human":
+            model_path = base_bath
+        else:
+            model_path = os.path.join(base_bath, "animal")
+        if not os.path.exists(model_path):
+            print(f"Downloading animal model to: {model_path}")
+            from huggingface_hub import snapshot_download
+
+            start_time = time.time()
+            saved_path = snapshot_download(
+                repo_id="phuc307/liveportrait-safetensors" if mode == "animal" else "Kijai/LivePortrait_safetensors",
+                allow_patterns=["*animal*"] if mode == "animal" else [],
+                ignore_patterns=["*landmark_model.pth*","*animal*"] if mode == "human" else ["*landmark_model.pth*"],
+                local_dir=base_bath,
+                local_dir_use_symlinks=False,
+            )
+            elapsed_time = time.time() - start_time
+            print(
+                f"✅ liveportrait checkpoints downloaded to {saved_path} in {elapsed_time:.2f}s"
+            )
+
 
         self.comfyUI.connect()
         self.comfyUI.run_workflow(workflow)
