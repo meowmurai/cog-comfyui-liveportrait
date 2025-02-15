@@ -14,13 +14,13 @@ def main():
     # Weights for human modes
     saved_path_human = snapshot_download(
         repo_id="Kijai/LivePortrait_safetensors",
-        ignore_patterns=["*landmark_model.pth*","*animal*"],
+        ignore_patterns=["*animal*"],
         local_dir=base_bath,
         local_dir_use_symlinks=False,
     )
     elapsed_time = time.time() - start_time
     print(
-            f"✅ liveportrait checkpoints downloaded to {saved_path_human} in {elapsed_time:.2f}s"
+            f"✅ liveportrait human checkpoints downloaded to {saved_path_human} in {elapsed_time:.2f}s"
     )
     # Weights for animal modes
 
@@ -33,7 +33,7 @@ def main():
     )
     elapsed_time = time.time() - start_time
     print(
-        f"✅ liveportrait checkpoints downloaded to {saved_path_animal} in {elapsed_time:.2f}s"
+        f"✅ liveportrait animal checkpoints downloaded to {saved_path_animal}/animal in {elapsed_time:.2f}s"
     )
 if __name__ == "__main__":
     main()
