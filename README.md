@@ -28,3 +28,10 @@ https://github.com/kijai/ComfyUI-LivePortraitKJ
 And the safetensor weights they converted:
 
 https://huggingface.co/Kijai/LivePortrait_safetensors/tree/main
+
+## Deployment
+
+- python ./scripts/reset.py
+- python ./scripts/download_custom_weights.py
+- cog predict -i face_image=@./face_image.jpg -i driving_video=@./driving_video.mp4 -i mode=animal
+- cog push r8.im/your-username/your-model-name
