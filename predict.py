@@ -7,6 +7,7 @@ import shutil
 from typing import List
 from cog import BasePredictor, Input, Path
 from comfyui import ComfyUI
+from scripts.download_custom_weights import COMFYUI_MODEL_DIR
 
 OUTPUT_DIR = "/tmp/outputs"
 INPUT_DIR = "/tmp/inputs"
@@ -189,4 +190,4 @@ class Predictor(BasePredictor):
         self.comfyUI.connect()
         self.comfyUI.run_workflow(workflow)
 
-        return self.comfyUI.get_files(OUTPUT_DIR, file_extensions=["mp4", "gif"])
+        return self.comfyUI.get_files(COMFYUI_MODEL_DIR, file_extensions=["mp4", "gif"])
