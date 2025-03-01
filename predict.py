@@ -1,6 +1,5 @@
 # An example of how to convert a given API workflow into its own Replicate model
 # Replace predict.py with this file when building your own workflow
-
 import os
 import mimetypes
 import json
@@ -16,7 +15,7 @@ ALL_DIRECTORIES = [OUTPUT_DIR, INPUT_DIR, COMFYUI_TEMP_OUTPUT_DIR]
 
 mimetypes.add_type("image/webp", ".webp")
 
-api_json_file = "new_workflow_api.json"
+api_json_file = "workflow_api.json"
 
 # Force HF offline
 os.environ["HF_DATASETS_OFFLINE"] = "1"
@@ -79,6 +78,12 @@ class Predictor(BasePredictor):
         live_portrait["stitching"] = kwargs["stitching"]
         live_portrait["relative"] = kwargs["relative"]
 
+        video_combine=workflow["168"]["inputs"]
+        video_combine["output_format"] = kwargs["output_format"]
+        if kwargs["fps"] > 0:
+            video_combine['frame_rate'] = kwargs["fps"]
+
+
     def predict(
         self,
         face_image: Path = Input(
@@ -102,6 +107,15 @@ class Predictor(BasePredictor):
         video_select_every_n_frames: int = Input(
             description="Select every nth frame from the driving video. Set to 1 to use all frames.",
             default=1,
+        ),
+        fps: int = Input(
+            description="FPS of output video. Set to 0 will make it same as the driving video",
+            default=0
+        ),
+        output_format: str = Input(
+            description="format of output video",
+            default="video/h264-mp4",
+            choices=["video/h264-mp4","image/gif", "video/mp4" ]
         ),
         live_portrait_dsize: int = Input(
             description="Size of the output image", default=512, ge=64, le=2048
@@ -156,6 +170,8 @@ class Predictor(BasePredictor):
             mode=mode,
             frame_load_cap=video_frame_load_cap,
             select_every_n_frames=video_select_every_n_frames,
+            fps=fps,
+            output_format=output_format,
             dsize=live_portrait_dsize,
             scale=live_portrait_scale,
             vx_ratio=live_portrait_vx_ratio,
@@ -173,4 +189,4 @@ class Predictor(BasePredictor):
         self.comfyUI.connect()
         self.comfyUI.run_workflow(workflow)
 
-        return self.comfyUI.get_files(OUTPUT_DIR, file_extensions=["mp4"])
+        return self.comfyUI.get_files(OUTPUT_DIR, file_extensions=["mp4", "gif"])
